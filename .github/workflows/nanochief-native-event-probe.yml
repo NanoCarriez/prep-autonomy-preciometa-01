@@ -15,6 +15,6 @@ jobs:
       - name: Emit harmless NanoChief native-event probe
         run: |
           echo "GITHUB_NATIVE_EVENT_NANOCHIEF_AUTOWAKE_01_PROBE"
-          echo "Follow-up: PRECIOMETA_NANOCHIEF_BUILD_RETURN_01"
+          echo "Follow-up: PRECIOMETA_GROKME_URL_RETURN_01"
           echo "Repository: $GITHUB_REPOSITORY"
           echo "Commit: $GITHUB_SHA"
