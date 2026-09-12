@@ -1,0 +1,9 @@
+{
+  "name": "prep-autonomy-preciometa-01",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-strip-types --test src/lib/pricing.test.ts src/lib/persist.test.ts",
+    "test:preciometa": "node --experimental-strip-types --test src/lib/pricing.test.ts src/lib/persist.test.ts"
+  }
+}

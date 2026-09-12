@@ -1,0 +1,92 @@
+{
+  "test_id": "PREP_AUTONOMY_PRECIOMETA_01",
+  "visible_marker": "PREP_AUTONOMY_PRECIOMETA_01",
+  "app": "PrecioMeta",
+  "product_build": {
+    "status": "BUILT",
+    "locale": "es",
+    "currency": "CLP",
+    "mobile_first": true,
+    "auth": false,
+    "backend": false,
+    "external_calls": false,
+    "storage_key": "prep_autonomy_preciometa_01_state",
+    "ui": {
+      "inputs": ["cost", "feePercent", "fixedFee", "targetProfit"],
+      "actions": ["Calcular", "Restablecer"],
+      "outputs": ["Precio mínimo de venta", "Utilidad proyectada"]
+    },
+    "formula": {
+      "FEE_RATE": "FEE_PERCENT / 100",
+      "MIN_PRICE_RAW": "(COST + FIXED_FEE + TARGET_PROFIT) / (1 - FEE_RATE)",
+      "MIN_PRICE_CLP": "ceil(MIN_PRICE_RAW)",
+      "PROJECTED_PROFIT_RAW": "MIN_PRICE_CLP - COST - FIXED_FEE - (MIN_PRICE_CLP * FEE_RATE)",
+      "human_percent": "3.5 means 3.5%, not 0.035"
+    },
+    "fixture": {
+      "COST": 10000,
+      "FEE_PERCENT": 3.5,
+      "FIXED_FEE": 500,
+      "TARGET_PROFIT": 5000,
+      "MIN_PRICE_CLP": 16063,
+      "PROJECTED_PROFIT_RAW_MIN_INCLUSIVE": 5000,
+      "PROJECTED_PROFIT_RAW_MAX_EXCLUSIVE": 5001
+    }
+  },
+  "local_qa": {
+    "status": "LOCAL_QA_PASS",
+    "unit_tests": {
+      "command": "npm run test:preciometa",
+      "passed": 19,
+      "failed": 0,
+      "covers": [
+        "fixture_min_price_16063",
+        "fixture_projected_profit_range",
+        "fee_0_valid",
+        "fee_100_invalid",
+        "negatives_invalid",
+        "empty_nan_infinity_safe",
+        "persist_valid_reload",
+        "reset_clears_persist"
+      ]
+    },
+    "typecheck": "PASS",
+    "build": "PASS",
+    "ui_flow": {
+      "fixture_calculate_16063": "PASS",
+      "fixture_projected_profit": "PASS",
+      "persist_reload_restores_16063": "PASS",
+      "reset_clears_inputs_result_and_localStorage": "PASS",
+      "empty_fields_safe_fail": "PASS",
+      "negatives_infinity_non_numeric_fee_100_safe_fail": "PASS",
+      "fee_0_min_price_15500": "PASS"
+    },
+    "viewport_390x844": {
+      "horizontal_overflow": false,
+      "primary_actions_visible_above_fold": true,
+      "result_reachable": true
+    },
+    "production_smoke_matches_dev": true,
+    "console_errors": [],
+    "notes": "Do not treat unit tests alone as product PASS. UI wiring was exercised in a real browser against the running app."
+  },
+  "github_export_target": "NanoCarriez/prep-autonomy-preciometa-01",
+  "publication_state": "WAITING_FOR_INDEPENDENT_QA",
+  "repair_loop": "NOT_EXERCISED_THIS_RUN",
+  "boundaries": {
+    "no_iva": true,
+    "no_shipping": true,
+    "no_hidden_fees": true,
+    "no_backend": true,
+    "no_auth": true,
+    "no_analytics": true,
+    "no_supabase": true,
+    "no_hotmart": true,
+    "no_meta": true,
+    "no_lovable": true,
+    "no_netlify": true,
+    "no_vercel_as_grokme_substitute": true,
+    "no_grok_me_publish_before_independent_qa": true,
+    "same_build_conversation_retained": true
+  }
+}
